@@ -1,15 +1,11 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using Bookshop.Models;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Options;
 
 namespace Bookshop
 {
@@ -22,13 +18,16 @@ namespace Bookshop
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<BookShopRepository>(Configuration.GetSection(nameof(BookShopRepository)));
+
+            services.AddSingleton<IBookShopRepository>(sp =>
+            sp.GetRequiredService<IOptions<BookShopRepository>>().Value);
+
             services.AddControllers();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -44,6 +43,11 @@ namespace Bookshop
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapGet("/", async ctx =>
+                {
+                    await ctx.Response.WriteAsync("Hello World");
+                });
+
                 endpoints.MapControllers();
             });
         }
