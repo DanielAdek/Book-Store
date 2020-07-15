@@ -18,5 +18,7 @@ namespace Bookshop.Services
         }
 
         public List<Book> Get() => _book.Find(book => true).ToList();
+
+        public Book Get(string id) => _book.Find(book => book.Id == id).FirstOrDefault();
     }
 }

@@ -6,7 +6,7 @@ using Bookshop.Models;
 namespace Bookshop.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("/api/v1/[controller]")]
     public class BooksController : ControllerBase
     {
         private readonly BookService _bookService;
@@ -18,5 +18,8 @@ namespace Bookshop.Controllers
 
         [HttpGet]
         public ActionResult<IEnumerable<Book>> Get() => _bookService.Get();
+
+        [HttpGet("{id:length(24)}")]
+        public ActionResult<Book> Get(string id) => _bookService.Get(id);
     }
 }
