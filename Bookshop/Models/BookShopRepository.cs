@@ -2,7 +2,7 @@ namespace Bookshop.Models
 {
     public class BookShopRepository : IBookShopRepository
     {
-        public string BookCollectionName { get; set; }
+        public string BookShopCollectionName { get; set; }
 
         public string ConnectionString { get; set; }
 
@@ -11,7 +11,7 @@ namespace Bookshop.Models
 
     public interface IBookShopRepository
     {
-        string BookCollectionName { get; set; }
+        string BookShopCollectionName { get; set; }
 
         string ConnectionString { get; set; }
 

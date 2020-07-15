@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Bookshop.Models;
+using Bookshop.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 
@@ -24,6 +25,8 @@ namespace Bookshop
 
             services.AddSingleton<IBookShopRepository>(sp =>
             sp.GetRequiredService<IOptions<BookShopRepository>>().Value);
+
+            services.AddSingleton<BookService>();
 
             services.AddControllers();
         }
